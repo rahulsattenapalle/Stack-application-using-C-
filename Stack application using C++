@@ -1,0 +1,92 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+#define MAX 10
+
+struct Student {
+    int id;
+    char name[50];
+    float marks;
+};
+
+class Stack {
+private:
+    Student s[MAX];
+    int top;
+
+public:
+    Stack() { top = -1; }
+
+    void push(Student stu) {
+        if (top >= MAX - 1) {
+            cout << "Stack Overflow! Cannot add more students.\n";
+            return;
+        }
+        s[++top] = stu;
+        cout << "Student record pushed.\n";
+    }
+
+    void pop() {
+        if (top < 0) {
+            cout << "Stack Underflow! No records to pop.\n";
+            return;
+        }
+        cout << "Popped Student ID: " << s[top].id << "\n";
+        top--;
+    }
+
+    void display() {
+        if (top < 0) {
+            cout << "Stack is empty.\n";
+            return;
+        }
+        cout << "Student Records in Stack:\n";
+        for (int i = top; i >= 0; i--) {
+            cout << "ID: " << s[i].id
+                 << ", Name: " << s[i].name
+                 << ", Marks: " << s[i].marks << "\n";
+        }
+    }
+};
+
+int main() {
+    Stack stack;
+    int choice;
+    Student stu;
+
+    do {
+        cout << "\n1. Push\n2. Pop\n3. Display\n4. Exit\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter Student ID: ";
+                cin >> stu.id;
+                cout << "Enter Name: ";
+                cin.ignore();
+                cin.getline(stu.name, 50);
+                cout << "Enter Marks: ";
+                cin >> stu.marks;
+                stack.push(stu);
+                break;
+
+            case 2:
+                stack.pop();
+                break;
+
+            case 3:
+                stack.display();
+                break;
+
+            case 4:
+                cout << "Exiting...\n";
+                break;
+
+            default:
+                cout << "Invalid choice.\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
